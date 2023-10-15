@@ -5,6 +5,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Category } from './products/categories/category.entity';
 import { ProductsModule } from './products/products.module';
 import { RouterModule, Routes } from '@nestjs/core';
+import { Product } from './products/product.entity';
 
 const SOURCE_OPTIONS: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -13,7 +14,7 @@ const SOURCE_OPTIONS: TypeOrmModuleOptions = {
   username: 'root',
   password: 'devroot',
   database: 'libreria_lajoya',
-  entities: [Category],
+  entities: [Category, Product],
   synchronize: false,
 };
 
