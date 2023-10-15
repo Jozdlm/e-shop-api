@@ -12,9 +12,9 @@ const SOURCE_OPTIONS: TypeOrmModuleOptions = {
   port: 3306,
   username: 'root',
   password: 'devroot',
-  database: 'dbsistema_cv',
+  database: 'libreria_lajoya',
   entities: [Category],
-  synchronize: true,
+  synchronize: false,
 };
 
 const ROUTES: Routes = [
