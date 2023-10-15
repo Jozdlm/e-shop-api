@@ -1,18 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from './product.entity';
+import { Repository } from 'typeorm';
 
 @Controller('products')
 export class ProductsController {
-  private _products: string[] = ['Aceite mineral', 'Jabón para trastes'];
+  public constructor(
+    @InjectRepository(Product)
+    private productsRepository: Repository<Product>
+  ){}
 
   @Get()
-  public findAll(): string[] {
-    return this._products;
-  }
-
-  @Post()
-  public create(@Body('name') product: string): object {
-    this._products.push(product);
-
-    return { message: 'Product Created' };
+  public findAll(): Promise<Product[]> {
+    return this.productsRepository.find({
+      relations: {
+        category: true
+      }
+    });
   }
 }
