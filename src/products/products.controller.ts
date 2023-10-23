@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { Repository } from 'typeorm';
@@ -11,7 +11,17 @@ export class ProductsController {
   ) {}
 
   @Get()
-  public findAll(): Promise<Product[]> {
+  public findAll(@Query('category') categorySlug: string): Promise<Product[]> {
+    if (categorySlug) {
+      return this.productsRepository.find({
+        where: {
+          category: {
+            slug: categorySlug,
+          },
+        },
+      });
+    }
+
     return this.productsRepository.find({
       relations: {
         category: true,
